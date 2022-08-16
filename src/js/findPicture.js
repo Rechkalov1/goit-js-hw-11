@@ -1,35 +1,31 @@
-import getPosts from './js/fetchPicture'
-import SimpleLightbox from "simplelightbox";
-import "simplelightbox/dist/simple-lightbox.min.css";
+import NewGalleryApi from './fetchPicture';
+import createOnePicture from './createListPicture';
+
 import Notiflix from 'notiflix';
+const axios = require('axios');
 
-const refs={
-searchForm:document.querySelector('.search-form'),
-input:document.querySelector('.input'),
-gallery:document.querySelector('.gallery')
-}
+const newGalleryApi =  new NewGalleryApi()
 
 
 
+refs.searchForm.addEventListener('submit',onSearchImage);
+refs.loadMore.addEventListener('click',onLoadMore);
+ refs.loadMore.classList.add('ishidden');
 
 
+function onSearchImage(e){
+  e.preventDefault();
 
+ newGalleryApi.query = e.currentTarget.elements.query.value;
+ newGalleryApi.resetPage();
+ newGalleryApi.fetchImage();
 
+};
+function onLoadMore(){
+newGalleryApi.fetchImage();
+};
 
-
-refs.searchForm.addEventListener('submit',searchImage)
-
-const searchImage =(e)=>{
-
-e.preventDefault();
-const searchQuery = e.currentTarget.elements.searchQuery.value;
-console.log(searchQuery)
-
-}
-
-
-const listPost =(list)=>list.reduce((acc,items)=>acc+postMarkup(items),"");
-const postMarkup=(data)=>{
+const createOnePicture=(data)=>{
   const {webformatURL,largeImageURL,tags,likes,views,comments,downloads} = data;
 return`<div class="photo-card">
 <a href='${largeImageURL}'>
@@ -54,11 +50,4 @@ return`<div class="photo-card">
 
 };
 
-
-
-new SimpleLightbox(".gallery a", {
-  captionSelector: "img",
-  captionsData: "alt",
-  captionPosition: "bottom",
-  captionDelay: 250,
-});
+const listPost =(list)=>list.reduce((acc,items)=>acc+createOnePicture(items),"");
