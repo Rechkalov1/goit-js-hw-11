@@ -1,4 +1,4 @@
-import './css/styles.css';
+import './css/style.css';
 import Notiflix from 'notiflix';
 import axios from "axios";
 import SimpleLightbox from "simplelightbox";
