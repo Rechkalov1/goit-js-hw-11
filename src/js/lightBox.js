@@ -13,4 +13,4 @@ const lightBoxCreate = () => {
 };
 const refresh = () => lightbox.refresh();
 
-export  { refresh, createLightBox }
+export  {lightBoxCreate }
