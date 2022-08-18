@@ -30,8 +30,10 @@ const refs={
        newGalleryApi.query = e.currentTarget.elements.query.value;
        newGalleryApi.resetPage();
        newGalleryApi.fetchImage();
+       
        responseData()
        buttonVisible();
+       clearArticleContainer()
      
       };
 
@@ -72,6 +74,10 @@ const refs={
   function insertCreatedAnimals (arrayImages) {
       const result = generateMarkup(arrayImages);
       refs.gallery.insertAdjacentHTML('beforeend', result);
-      lightboxCreate();
+    
    
   };
+
+  function clearArticleContainer(){
+    refs.gallery.innerHTML = '';
+  }

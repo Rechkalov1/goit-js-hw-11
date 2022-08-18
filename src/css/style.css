@@ -50,6 +50,7 @@
     flex-wrap: wrap;
     height: 100%;
     margin-top: 80px;
+    margin-bottom: 50px;
   }
 
   .photo-card{
@@ -88,7 +89,10 @@
     margin-right: 0;
   }
   .load-more {
-    position: relative;
+   
+    position: fixed;
+    bottom: 65px;
+   right: 30px;
   display: block;
   
     padding: 10px 20px;
