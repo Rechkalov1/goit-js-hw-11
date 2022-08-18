@@ -30,12 +30,15 @@ const refs={
        newGalleryApi.query = e.currentTarget.elements.query.value;
        newGalleryApi.resetPage();
        newGalleryApi.fetchImage();
-       
+
        responseData()
        buttonVisible();
        clearArticleContainer()
-     
-      };
+    
+
+     }
+
+   
 
       function onLoadMore(){
         newGalleryApi.fetchImage();
