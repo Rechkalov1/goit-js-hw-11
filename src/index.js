@@ -1,5 +1,4 @@
 import NewGalleryApi  from "./js/fetchPicture";
-import createListPicture from './createListPicture';
 import Notiflix from 'notiflix';
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
@@ -27,18 +26,14 @@ const refs={
        newGalleryApi.query = e.currentTarget.elements.query.value;
        newGalleryApi.resetPage();
        newGalleryApi.fetchImage();
-       insertCreatedAnimals()
+       insertCreatedAnimals();
        
-       lightbox = new SimpleLightbox('.gallery a', {
-        captionsData: 'alt',
-        captionPosition: 'bottom',
-        captionDelay: 250,
-      });
+     
       };
 
       function onLoadMore(){
         newGalleryApi.fetchImage();
-        insertCreatedAnimals()
+        insertCreatedAnimals();
         };
 
         const createOnePicture=picture=>
@@ -64,10 +59,8 @@ const refs={
   `;
 
   
- function generateMarkup ({arrayImages,totalHits}){
-    if (newGalleryApi.page === 1) {
-      Notiflix.Notify.success(`Hoooray! We found ${totalHits} images!`);
-  }
+ function generateMarkup (arrayImages){
+// 
     return arrayImages.reduce((acc,picture)=>acc + createOnePicture(picture),"");
   };
     
@@ -75,6 +68,5 @@ const refs={
       const result = generateMarkup(arrayImages);
   
       refs.gallery.insertAdjacentHTML('beforeend', result);
-      lightbox.refresh();
+   
   };
-s  

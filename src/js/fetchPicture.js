@@ -7,7 +7,7 @@ this.per_page = 40;
 this.page = 1;
   }
   async fetchImage(){
-   
+   console.log(this)
     const URL="https://pixabay.com/api/";
     const KEY="29222910-b478f7ced416d0dc238ac2c9c";
     const REQUEST_URL = `${URL}?key=${KEY}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&per_page${this.per_page}page=${this.page}`
@@ -38,19 +38,12 @@ set query (newQuery) {
 
 
 
-import NewGalleryApi from './fetchPicture';
-import createOnePicture from './createListPicture';
-import createListPicture from './createListPicture'
 
 
 
-const newGalleryApi =  new NewGalleryApi()
 
 
 
-refs.searchForm.addEventListener('submit',onSearchImage);
-refs.loadMore.addEventListener('click',onLoadMore);
- 
 
 
 
