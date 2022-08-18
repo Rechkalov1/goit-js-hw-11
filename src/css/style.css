@@ -112,9 +112,12 @@
     position: relative;
     margin-right: auto;
     margin-left: 20px;
-    left: 0px;
+    left: -78px;
    top:0px;
     margin-top: 10px;
     width: 20px;
     height: 20px;
+  }
+  .ishidden {
+    display: none;
   }

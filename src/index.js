@@ -1,8 +1,7 @@
 import NewGalleryApi  from "./js/fetchPicture";
 import Notiflix from 'notiflix';
-import SimpleLightbox from "simplelightbox";
-import "simplelightbox/dist/simple-lightbox.min.css";
-
+import { refresh,lightboxCreate } from "./js/lightBox";
+import "./css/style.css";
 const newGalleryApi =  new NewGalleryApi()
 
 
@@ -14,27 +13,33 @@ const refs={
     gallery:document.querySelector('.gallery'),
     loadMore:document.querySelector(".load-more")
     };
-
+    const buttonHiden =()=> refs.loadMore.classList.add('ishidden');
+    const buttonVisible =()=> refs.loadMore.classList.remove('ishidden');
 
     refs.searchForm.addEventListener('submit',onSearchImage);
     refs.loadMore.addEventListener('click',onLoadMore);
 
-
+    async function responseData() {
+      const response= await newGalleryApi.fetchImage();
+      insertCreatedAnimals(response.hits);
+    }
+    buttonHiden();
     function onSearchImage(e){
         e.preventDefault();
       
        newGalleryApi.query = e.currentTarget.elements.query.value;
        newGalleryApi.resetPage();
        newGalleryApi.fetchImage();
-       insertCreatedAnimals();
-       
+       responseData()
+       buttonVisible();
      
       };
 
       function onLoadMore(){
         newGalleryApi.fetchImage();
-        insertCreatedAnimals();
+        responseData()
         };
+
 
         const createOnePicture=picture=>
     `<div class="photo-card">
@@ -66,7 +71,7 @@ const refs={
     
   function insertCreatedAnimals (arrayImages) {
       const result = generateMarkup(arrayImages);
-  
       refs.gallery.insertAdjacentHTML('beforeend', result);
+      lightboxCreate();
    
   };
