@@ -1,6 +1,6 @@
 import NewGalleryApi  from "./js/fetchPicture";
 import Notiflix from 'notiflix';
-import {lightBoxCreate } from "./js/lightBox";
+import {lightbox} from "./js/lightBox";
 import "./css/style.css";
 const newGalleryApi =  new NewGalleryApi()
 
@@ -16,7 +16,7 @@ const refs={
     const buttonHidden =()=> refs.loadMore.classList.add('ishidden');
     const buttonVisible =()=> refs.loadMore.classList.remove('ishidden');
     
-    
+    buttonHidden();
 
 
     refs.searchForm.addEventListener('submit',onSearchImage);
@@ -27,31 +27,36 @@ const refs={
         const response = await newGalleryApi.fetchImage();
         insertCreatedAnimals(response.hits);
         notification(response);
+        lightbox.refresh();
+        newGalleryApi.fetchImage();
       
     }
-    buttonHidden();
+   
     function onSearchImage(e){
         e.preventDefault();
       
        newGalleryApi.query = e.currentTarget.elements.query.value;
+       if( newGalleryApi.query == ''){
+        return;
+       }
        newGalleryApi.resetPage();
-       newGalleryApi.fetchImage();
+      
 
        responseData()
-       buttonVisible();
+      
        clearArticleContainer()
-    
+      
 
      }
 
    
 
       function onLoadMore(){
-    
+       
           newGalleryApi.fetchImage();
           responseData()
-          refresh ()
-       
+        
+       newGalleryApi.additionPage()
         };
 
 
@@ -86,23 +91,25 @@ const refs={
   function insertCreatedAnimals (arrayImages) {
       const result = generateMarkup(arrayImages);
       refs.gallery.insertAdjacentHTML('beforeend', result);
-      lightBoxCreate()
+      lightbox.refresh();
    
   };
 
   function notification(response){
     const totalPage = Math.ceil(response.totalHits / newGalleryApi.perPage);
-    console.log(totalPage)
+ 
     if (response.totalHits === 0) {
       Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.')
       buttonHidden();
       clearArticleContainer();
-    } 
+    } else if (newGalleryApi.page === 1) {
+      buttonVisible();}
     else if (newGalleryApi.page >= totalPage){
         buttonHidden();
        Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
        return;
   
-    } 
+    };
+
   };
 const  clearArticleContainer=()=> refs.gallery.innerHTML = '';
